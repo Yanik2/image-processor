@@ -5,6 +5,7 @@ import com.imageanalysis.api.dto.ConfirmationResponseDto;
 import com.imageanalysis.api.dto.CreateProcessRequest;
 import com.imageanalysis.api.dto.CreateProcessResponse;
 import com.imageanalysis.api.dto.ImageProcessStatusDto;
+import com.imageanalysis.api.dto.PubSubMessageDto;
 import java.net.URI;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
@@ -40,5 +41,14 @@ public class ImageProcessPersistentService {
             .uri(URI.create(PROCESS_STATUS_URI_TEMPLATE.formatted(imageProcessId)))
             .retrieve()
             .body(ImageProcessStatusDto.class);
+    }
+
+    public void updateStatus(PubSubMessageDto message) {
+        restClient.put()
+            .uri(PROCESS_STATUS_URI_TEMPLATE.formatted(message.processingId()))
+            .body(message)
+            .contentType(MediaType.APPLICATION_JSON)
+            .retrieve()
+            .toBodilessEntity();
     }
 }

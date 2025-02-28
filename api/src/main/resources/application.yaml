@@ -7,3 +7,6 @@ persistent:
 cloud:
   bucket:
     name: image_bucket
+
+pubsub:
+  subscription: image-subscription
